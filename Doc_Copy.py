@@ -16,8 +16,9 @@ print('path obtained  ' + str(buf.value))
 #create directory to copy files to
 print ''
 print 'Copying files...'
+#setting variables for the copying and naming of files
 SOURCE = buf.value
-BACKUP = "Program Files\TempPy\ddd"
+BACKUP = "Program Files\TempPy\ddd" #for some reason this CREATES the folder isntead of finding
 # create a backup directory
 shutil.copytree(SOURCE, BACKUP)
 print (os.listdir(BACKUP))
@@ -27,7 +28,7 @@ print 'Files successfully copied'
 #ZIP THE FILE
 print ''
 print 'About to zip the file...'
-output_path = 'Program Files'
+output_path = 'Program Files' #again with the creating vrs finding
 folder_path = 'Program Files\TempPy\Documents'
 def zipfolder(foldername, target_dir):            
     zipobj = zipfile.ZipFile(foldername + '.zip', 'w', zipfile.ZIP_DEFLATED, allowZip64 = True)
@@ -36,7 +37,8 @@ def zipfolder(foldername, target_dir):
         for file in files:
             fn = os.path.join(base, file)
             zipobj.write(fn, fn[rootlen:])
-output_filename = str(random.randint(1, 1000))
+output_filename = str(random.randint(1, 1000)) #set a random filename so you don't have multiple/
+#\ files named the same thing in drive
 zipfolder(output_filename, 'Program Files')
 print 'Zip complete'
 
@@ -46,7 +48,7 @@ print ''
 print 'Now to upload to Google Drive...'
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
-gauth = GoogleAuth()
+gauth = GoogleAuth() #thing you have to do
 drive = GoogleDrive(gauth)
 f = drive.CreateFile({'title': output_filename})
 f.SetContentFile(output_filename + ".zip") # Read local file
